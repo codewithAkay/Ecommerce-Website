@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <!-- utilisation de la derniere version de compatibilité-->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- configuration pour les appareils mobiles-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Friperie solidaire</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<style>
+     * { 
+    font-family: 'Poppins', sans-serif;
+    margin: 0%;
+    padding: 0%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+ }
+:root {
+    --main-color:#fd4646;
+    --text-color: #171427;
+    --bg-color: #fff;
+}
+img{
+    width: 100%;
+}
+body{
+    color: var(--text-color);
+    width: 100%;
+}
+section {
+    padding: 4rem 0 3rem;
+}
+.container{
+    width: 200%;
+    margin: auto;
+    max-width: 1068px;
+}
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: var(--bg-color);
+    box-shadow: 0 1px 4 px hsl(0 4% 15% / 10%);
+}
+
+.logo {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+#icon {
+    font-size: 2rem;
+    cursor: pointer;
+}
+.section{
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1.4rem;
+}
+.shop {
+    margin-top: 1rem;
+}
+.produits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,auto));
+    gap: 1rem;
+}
+.produit {
+    position:-webkit-sticky;
+}
+.produit:hover {
+    border:  1px solid var(--text-color);
+    padding: 25px;
+    transition: 0,5s;
+}
+.image {
+    height: 9cm;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+</style>
+<script>
+   fetch('/fetchData')
+  .then((response) => response.json())
+  .then((data) => {
+    const product = document.getElementById("produits");
+    data.forEach((row) => {
+      // create a new product element
+      const produit = document.createElement('div');
+      produit.classList.add('produit');
+
+      // create image element and set the src attribute to the image URL
+      const img = document.createElement('img');
+      const imagePath = row.image;
+      const formattedImagePath = imagePath.replace('public\\img', 'img/');
+      img.src =formattedImagePath;
+      console.log(row.image)
+      img.alt = row.name;
+      img.classList.add('image');
+
+      // create title and price elements
+      const titre = document.createElement('h4');
+      titre.textContent = row.name;
+      titre.classList.add('titre');
+
+      const prix = document.createElement('span');
+      prix.textContent = row.price + '€';
+      prix.classList.add('prix');
+
+      // create shopping bag icon element
+      const iconLink = document.createElement('a');
+      iconLink.href = `/cart/${row.id}`;
+
+      const icon = document.createElement('i');
+      icon.classList.add('bx', 'bx-shopping-bag');
+      icon.id = 'icon' ;
+      
+      
+      iconLink.appendChild(icon);
+      
+      // append all elements to the product element
+      produit.appendChild(img);
+      produit.appendChild(titre);
+      produit.appendChild(prix);
+      produit.appendChild(iconLink); 
+
+      // append the product element to the #produits element
+      product.appendChild(produit);
+    });
+  })
+  .catch((error) => console.error(error));
+
+
+</script>
+    </head>
+    <body>
+      <%- include ('partials/messages') %>
+      <!-- THIS IS HEADER Part -->
+        <header>
+           
+            <nav class="navbar navbar-expand-lg navbar-dark bg-danger" style="position:static;">
+                <a class="navbar-brand" href="#">Friperie solidaire</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Produts</a>
+                    </li>
+                  
+                </div>
+                
+              <div> 
+                 <a href="/cart/add" class='bx bx-shopping-bag' id="icon" ></a>
+            </div>
+            login
+                <a href="/users/login"> 
+                    
+                
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                      <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                     
+                    </svg>
+                  </a>
+                 
+              </nav>
+  
+  
+
+
+
+
+              
+           
+        </header>
+        <!-- THIS IS MAIN PART -->
+    <main class="container-fluid">
+        </div>
+            
+        <!-- section de shopping-->
+        <section class="shop container">
+            <div  class="py-3 bg-dark bg-pattern mb-4">
+                
+                  
+              
+                      <!-- Text -->
+                      <div class="text-center text-white">
+                        <span class="heading-xxs letter-spacing-xl">
+                          ⚡️ Votre friperie en ligne pas chére⚡️
+                        </span>
+                      </div>
+              
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="width: 100%; height: 200%;">
+            <div class="ecommerce-home" style="background-image: url('https://wallpapercave.com/wp/wp4722672.jpg');background-size: cover;">
+
+                            <div class="text-end">
+                                <p class="fs-15 fw-semibold text-uppercase text-light">OutFits Design with Love</p>
+                                <h1 class="display-4 fw-semibold text-capitalize lh-base text-light">Discover world best OutsFits</h1>
+                                <p class="text-dark lead fs-19 mb-4">Outfits are like a tribute to being a woman and Men</p>
+                                <div class="hstack gap-2 justify-content-end">
+                                    <a href="/cart/add">
+                                    <button class="btn btn-success btn-hover ">Shop Now <i class="ph-arrow-up-right align-middle ms-1"></i></button>
+                                </a>
+                                    <button class="btn btn-ghost-primmary btn-hover">Watch Now <i class="ph-play-circle align-middle ms-1 fs-16"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <h1 style="text-align:center;">Our products</h1>
+            <h2></h2>
+            <br>
+
+            <!--Les produits-->
+           
+            <div class="produits" id="produits">
+             
+            </div>
+            
+        </section>
+    </main>
+
+
+    <!-- THIS IS FOOTER -->
+  <footer>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <hr class="my-4">
+            </div>
+            <div class="col-md-6 text-center text-md-start mb-4">
+              <p class="text-muted">&copy; 2023 Company, Inc. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end mb-4">
+              <ul class="list-inline">
+                <li class="list-inline-item me-3"><a href="#" class="text-muted">Privacy Policy</a></li>
+                <li class="list-inline-item me-3"><a href="#" class="text-muted">Terms of Use</a></li>
+                <li class="list-inline-item me-3"><a href="#" class="text-muted">FAQ</a></li>
+              </ul>
+             
+
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
+      
+    </body>
+</html>
